@@ -6,13 +6,14 @@ import GrantRatesOverTimeImg from '../../../styles/Images/line-graph-no-text.png
 import HrfPhoto from '../../../styles/Images/paper-stack.jpg';
 import '../../../styles/RenderLandingPage.less';
 import { Button } from 'antd';
-
+import { useHistory } from 'react-router-dom';
+// for the purposes of testing PageNav
+// import PageNav from '../../common/PageNav';
 function RenderLandingPage(props) {
   const scrollToTop = () => {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
   };
-
   const history = useHistory();
 
   return (
@@ -29,7 +30,32 @@ function RenderLandingPage(props) {
       </div>
 
       {/* Graphs Section: Add code here for the graphs section for your first ticket */}
-      {/* <div className="graphs-section"> */}
+      <div className="graphs-section">
+        <div>
+          <img
+            src={GrantRatesByOfficeImg}
+            alt="Grant Rates By Office"
+            className="graphImg"
+          />
+          <p className="graphText">Search Grant Rates By Office</p>
+        </div>
+        <div>
+          <img
+            src={GrantRatesByNationalityImg}
+            alt="Grant Rates Be Nationality"
+            className="graphImg"
+          />
+          <p className="graphText">Search Grant Rates By Nationality</p>
+        </div>
+        <div>
+          <img
+            src={GrantRatesOverTimeImg}
+            alt="Grant Rates Over Time"
+            className="graphImg"
+          />
+          <p className="graphText">Search Grant Rates Over Time</p>
+        </div>
+      </div>
       <div className="view-more-data-btn-container">
         <Button
           type="default"
@@ -37,6 +63,13 @@ function RenderLandingPage(props) {
           onClick={() => history.push('/graphs')}
         >
           View the Data
+        </Button>
+        <Button
+          type="default"
+          style={{ backgroundColor: '#404C4A', color: '#FFFFFF' }}
+          onClick={() => history.push('/graphs')}
+        >
+          Download the Data
         </Button>
       </div>
 
