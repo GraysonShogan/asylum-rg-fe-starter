@@ -41,9 +41,27 @@
   font-size: 1.2rem;
 }
 
-// .graphs-section {
-//  ADD THIS BACK IN WHEN YOU HAVE THE GRAPHS SECTION
-// }
+.graphs-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.graphImg {
+  margin-bottom: 25px;
+  height: 200px;
+  object-fit: cover;
+}
+
+.graphText {
+  font-family: 'acumin';
+  font-size: 1.2rem;
+  margin-top: 5px;
+}
 
 .view-more-data-btn-container {
   height: 44px;
@@ -75,10 +93,44 @@
   font-size: 1.4rem;
 }
 
-// .bottom-section {
-//      ADD THIS BACK IN WHEN YOU HAVE A BOTTOM SECTION
-// }
+.bottom-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
+.bottom-section-text-container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 5%;
+  text-align: center;
+  font-weight: bold;
+}
+
+.bottom-section-text-container h3 {
+  font-family: 'moneta';
+  font-size: 3rem;
+  margin-bottom: 5%;
+  font-weight: bolder;
+}
+
+.bottom-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  margin-top: 5%;
+}
+
+.factText {
+  font-family: 'acumin';
+  font-size: 1.2rem;
+  margin-top: 5px;
+  word-break: break-word;
+  max-width: 500px;
+}
 .back-to-top {
   width: 8%;
   font-size: 1.2rem;
@@ -703,56 +755,56 @@
     flex-wrap: wrap;
     justify-content: space-between;
   }
-}
 
-@media @laptop {
-  .header {
-    height: 35vh;
-  }
+  @media @laptop {
+    .header {
+      height: 35vh;
+    }
 
-  .header-text-container h1 {
-    font-size: 2.8rem;
-    padding-top: 5%;
-  }
+    .header-text-container h1 {
+      font-size: 2.8rem;
+      padding-top: 5%;
+    }
 
-  .header-text-container h3 {
-    font-size: 1.4rem;
-    width: 75%;
-    margin: 0 auto;
-  }
+    .header-text-container h3 {
+      font-size: 1.4rem;
+      width: 75%;
+      margin: 0 auto;
+    }
 
-  .middle-section {
-    display: flex;
-    width: 100%;
-    justify-content: space-evenly;
-    padding: 0 2%;
-  }
+    .middle-section {
+      display: flex;
+      width: 100%;
+      justify-content: space-evenly;
+      padding: 0 2%;
+    }
 
-  .hrf-img {
-    height: 318px;
-    width: 608px;
-  }
+    .hrf-img {
+      height: 318px;
+      width: 608px;
+    }
 
-  .middle-section-text-container {
-    width: 85%;
-    text-align: center;
-    margin: 0 auto;
-    padding: 0 2%;
-  }
+    .middle-section-text-container {
+      width: 85%;
+      text-align: center;
+      margin: 0 auto;
+      padding: 0 2%;
+    }
 
-  .first-data-point-container {
-    width: 23%;
-  }
+    .first-data-point-container {
+      width: 23%;
+    }
 
-  .second-data-point-container {
-    width: 23%;
-  }
+    .second-data-point-container {
+      width: 23%;
+    }
 
-  .third-data-point-container {
-    width: 23%;
-  }
+    .third-data-point-container {
+      width: 23%;
+    }
 
-  .back-to-top {
-    width: 35%;
+    .back-to-top {
+      width: 35%;
+    }
   }
 }
