@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { resetVisualizationQuery } from '../../../state/actionCreators';
 import CitizenshipMapAll from './Graphs/CitizenshipMapAll';
 import CitizenshipMapSingleOffice from './Graphs/CitizenshipMapSingleOffice';
 import TimeSeriesAll from './Graphs/TimeSeriesAll';
@@ -8,103 +10,41 @@ import OfficeHeatMap from './Graphs/OfficeHeatMap';
 import TimeSeriesSingleOffice from './Graphs/TimeSeriesSingleOffice';
 import YearLimitsSelect from './YearLimitsSelect';
 import ViewSelect from './ViewSelect';
-import axios from 'axios';
-import { resetVisualizationQuery } from '../../../state/actionCreators';
-import { colors } from '../../../styles/data_vis_colors';
 import ScrollToTopOnMount from '../../../utils/scrollToTopOnMount';
+import { colors } from '../../../styles/data_vis_colors';
 
-const { background_color } = colors;
-function GraphWrapper(props) {
-  const { set_view, dispatch } = props;
-  let { office, view } = useParams();
+const GraphWrapper = ({ set_view, dispatch }) => {
+  const { office, view = 'time-series' } = useParams();
+  const [apiData, setApiData] = useState(null);
 
-  if (!view) {
-    set_view('time-series');
-    view = 'time-series';
-  }
+  useEffect(() => {
+    fetchApiData();
+  }, [view, office]);
 
-  let map_to_render;
-
-  if (!office) {
-    switch (view) {
-      case 'time-series':
-        map_to_render = <TimeSeriesAll />;
-        break;
-      case 'office-heat-map':
-        map_to_render = <OfficeHeatMap />;
-        break;
-      case 'citizenship':
-        map_to_render = <CitizenshipMapAll />;
-        break;
-      default:
-        break;
+  const fetchApiData = async () => {
+    const fetchData = async endpoint =>
+      axios.get(`https://hrf-asylum-be-b.herokuapp.com/cases/${endpoint}`);
+    try {
+      const [fiscalData, citizenshipData] = await Promise.all([
+        fetchData('fiscalSummary'),
+        fetchData('citizenshipSummary'),
+      ]);
+      setApiData({
+        fiscalData: fiscalData.data,
+        citizenshipData: citizenshipData.data,
+      });
+    } catch (error) {
+      console.error('Failed to fetch data:', error);
+      setApiData(null);
     }
-  } else {
-    switch (view) {
-      case 'time-series':
-        map_to_render = <TimeSeriesSingleOffice office={office} />;
-        break;
-      case 'citizenship':
-        map_to_render = <CitizenshipMapSingleOffice office={office} />;
-        break;
-      default:
-        break;
-    }
-  }
-
-  async function updateStateWithNewData(
-    years,
-    view,
-    office,
-    stateSettingCallback
-  ) {
-    if (office === 'all' || !office) {
-      try {
-        const [fiscalRes, citizenshipRes] = await Promise.all([
-          axios.get(
-            'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary'
-          ),
-          axios.get(
-            'https://hrf-asylum-be-b.herokuapp.com/cases/citizenshipSummary'
-          ),
-        ]);
-
-        const data = [fiscalRes.data, {}];
-        data[0].citizenshipResults = citizenshipRes.data;
-
-        console.log(data);
-        stateSettingCallback(view, office, data);
-      } catch (err) {
-        console.log(err);
-      }
-    } else {
-      let data = [];
-
-      if (view === 'time-series' || view === 'office-heat-map') {
-        try {
-          const res = await axios.get(
-            'https://hrf-asylum-be-b.herokuapp.com/cases/fiscalSummary',
-            {
-              params: {
-                from: years[0],
-                to: years[1],
-                office: office,
-              },
-            }
-          );
-
-          data[0] = res.data;
-          stateSettingCallback(view, office, data);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    }
-  }
-
-  const clearQuery = (view, office) => {
-    dispatch(resetVisualizationQuery(view, office));
   };
+
+  const MapComponent =
+    {
+      'time-series': office ? TimeSeriesSingleOffice : TimeSeriesAll,
+      'office-heat-map': OfficeHeatMap,
+      citizenship: office ? CitizenshipMapSingleOffice : CitizenshipMapAll,
+    }[view] || TimeSeriesAll;
 
   return (
     <div
@@ -114,11 +54,11 @@ function GraphWrapper(props) {
         alignItems: 'flex-start',
         justifyContent: 'center',
         minHeight: '50px',
-        backgroundColor: background_color,
+        backgroundColor: colors.background_color,
       }}
     >
       <ScrollToTopOnMount />
-      {map_to_render}
+      <MapComponent data={apiData} office={office} />
       <div
         className="user-input-sidebar-container"
         style={{
@@ -133,12 +73,12 @@ function GraphWrapper(props) {
         <YearLimitsSelect
           view={view}
           office={office}
-          clearQuery={clearQuery}
-          updateStateWithNewData={updateStateWithNewData}
+          clearQuery={() => dispatch(resetVisualizationQuery(view, office))}
+          updateStateWithNewData={fetchApiData}
         />
       </div>
     </div>
   );
-}
+};
 
 export default connect()(GraphWrapper);
