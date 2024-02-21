@@ -64,11 +64,18 @@
 }
 
 .view-more-data-btn-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 44px;
   width: 180px;
   margin: 0 auto;
-  text-align: center;
   margin-bottom: 10%;
+}
+
+.view-more-data-btn-container button {
+  margin-right: 10px;
+  margin-left: 10px;
 }
 
 .middle-section {
@@ -100,13 +107,13 @@
 }
 
 .bottom-section-text-container {
-  display: flex;
-  justify-content: space-evenly;
-  align-items: center;
-  width: 100%;
-  margin-bottom: 5%;
-  text-align: center;
-  font-weight: bold;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 5%;
+    text-align: center;
+    font-weight: bold;
 }
 
 .bottom-section-text-container h3 {
@@ -125,12 +132,13 @@
 }
 
 .factText {
-  font-family: 'acumin';
-  font-size: 1.2rem;
-  margin-top: 5px;
-  word-break: break-word;
-  max-width: 500px;
+    font-family: 'acumin';
+    font-size: 1.2rem;
+    margin-top: 5px;
+    word-break: break-word;
+    max-width: 500px;
 }
+
 .back-to-top {
   width: 8%;
   font-size: 1.2rem;
@@ -755,56 +763,56 @@
     flex-wrap: wrap;
     justify-content: space-between;
   }
+}
 
-  @media @laptop {
-    .header {
-      height: 35vh;
-    }
+@media @laptop {
+  .header {
+    height: 35vh;
+  }
 
-    .header-text-container h1 {
-      font-size: 2.8rem;
-      padding-top: 5%;
-    }
+  .header-text-container h1 {
+    font-size: 2.8rem;
+    padding-top: 5%;
+  }
 
-    .header-text-container h3 {
-      font-size: 1.4rem;
-      width: 75%;
-      margin: 0 auto;
-    }
+  .header-text-container h3 {
+    font-size: 1.4rem;
+    width: 75%;
+    margin: 0 auto;
+  }
 
-    .middle-section {
-      display: flex;
-      width: 100%;
-      justify-content: space-evenly;
-      padding: 0 2%;
-    }
+  .middle-section {
+    display: flex;
+    width: 100%;
+    justify-content: space-evenly;
+    padding: 0 2%;
+  }
 
-    .hrf-img {
-      height: 318px;
-      width: 608px;
-    }
+  .hrf-img {
+    height: 318px;
+    width: 608px;
+  }
 
-    .middle-section-text-container {
-      width: 85%;
-      text-align: center;
-      margin: 0 auto;
-      padding: 0 2%;
-    }
+  .middle-section-text-container {
+    width: 85%;
+    text-align: center;
+    margin: 0 auto;
+    padding: 0 2%;
+  }
 
-    .first-data-point-container {
-      width: 23%;
-    }
+  .first-data-point-container {
+    width: 23%;
+  }
 
-    .second-data-point-container {
-      width: 23%;
-    }
+  .second-data-point-container {
+    width: 23%;
+  }
 
-    .third-data-point-container {
-      width: 23%;
-    }
+  .third-data-point-container {
+    width: 23%;
+  }
 
-    .back-to-top {
-      width: 35%;
-    }
+  .back-to-top {
+    width: 35%;
   }
 }
