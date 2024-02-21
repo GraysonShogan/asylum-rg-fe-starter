@@ -34,7 +34,11 @@ ReactDOM.render(
   <Router>
     <Provider store={store}>
       <React.StrictMode>
-        <App />
+        <BrowserRouter>
+          <Auth0ProviderWithHistory>
+            <App />
+          </Auth0ProviderWithHistory>
+        </BrowserRouter>
       </React.StrictMode>
     </Provider>
   </Router>,
@@ -55,9 +59,11 @@ export function App() {
       >
         <HeaderContent />
       </Header>
+      <NavBar />
       <Switch>
         <Route path="/" exact component={LandingPage} />
         <Route path="/graphs" component={GraphsContainer} />
+        <Route path="/profile" component={Profile} />
         <Route component={NotFoundPage} />
       </Switch>
       <Footer
