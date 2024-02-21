@@ -4,8 +4,7 @@ import SubTable from './SubTable';
 
 function TableRow(props) {
   const { columns, row, tableWidth, rowHeight } = props;
-  // row should be an object with keys for each column here;
-  // columns should be an array
+
   return (
     <div
       className="table-row"
@@ -17,27 +16,29 @@ function TableRow(props) {
       }}
     >
       {columns.map((property, idx) => {
-        if (row) {
-          if (typeof row[property] === 'object') {
-            return (
-              <SubTable
-                dataObject={row[property]}
-                rowHeight={rowHeight} // so for the SubTablesTable the row should be an object of objects
-                key={idx}
-              />
-            );
-          } else {
-            return (
-              <div style={{ overflow: 'hidden', flex: '1' }}>
-                <TableInnerSquare
-                  innerData={row[property]}
-                  rowHeight={rowHeight}
-                  key={idx}
-                />
-              </div>
-            );
-          }
+        if (!row) {
+          return null; // Return null or a placeholder if row is undefined or condition is not met
         }
+
+        if (typeof row[property] === 'object') {
+          return (
+            <SubTable
+              dataObject={row[property]}
+              rowHeight={rowHeight}
+              key={idx}
+            />
+          );
+        } else {
+          return (
+            <div key={idx} style={{ overflow: 'hidden', flex: '1' }}>
+              <TableInnerSquare
+                innerData={row[property]}
+                rowHeight={rowHeight}
+              />
+            </div>
+          );
+        }
+        // No need for an else case after conditions, as all paths return a value
       })}
     </div>
   );
