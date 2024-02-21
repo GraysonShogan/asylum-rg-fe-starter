@@ -1,14 +1,9 @@
 import React from 'react';
-
-import LoginButton from './login-button.js';
-import LogoutButton from './logout-button';
-
 import { useAuth0 } from '@auth0/auth0-react';
 
-const AuthenticationButton = () => {
-  const { isAuthenticated } = useAuth0();
-
-  return isAuthenticated ? <LogoutButton /> : <LoginButton />;
+const LoginButton = () => {
+  const { loginWithRedirect } = useAuth0();
+  return <button onClick={() => loginWithRedirect()}>Log In</button>;
 };
 
-export default AuthenticationButton;
+export default LoginButton;
